@@ -11,11 +11,12 @@ router.use((req, res, next) => {
 
 router.use(
     (req, res, next) => {
-    req.url = "/auth" + req.url; // <-- THIS is the missing piece!
+    req.url = "/auth" + req.url; // 
+    console.log("Inside asdnansknad");
     next();
   },
   createProxyMiddleware({
-    target: "http://localhost:4001",
+    target: "http://auth:4001",
     changeOrigin: true,
     logLevel: "debug",
   })

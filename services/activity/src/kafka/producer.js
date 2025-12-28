@@ -40,3 +40,10 @@ export const sendEvent = async (topic, message) => {
 
   console.log(`Event sent to ${topic}`);
 };
+
+export const sendToTopic = async (topic, event) => {
+  await producer.send({
+    topic,
+    messages: [{ value: JSON.stringify(event) }],
+  });
+};

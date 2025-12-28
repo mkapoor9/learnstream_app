@@ -21,6 +21,9 @@ const PORT = process.env.PORT || 4005
 app.listen(PORT,async()=>{
     console.log(`Activity running on port ${PORT}`)
     await connectMongo();
-    await startConsumer();
+    setTimeout(async()=>{
+        await startConsumer();
+    },10000);
+    
 
 })

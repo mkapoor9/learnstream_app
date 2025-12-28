@@ -1,10 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import prisma from "../db/prismaSe.js";
 import { hashPassword,comparePassword } from "../utils/hash.js";
 import { generateRefreshToken,generateAccessToken } from "../utils/jwt.js";
 import { hash } from "bcrypt";
 import { sendEvent } from "../kafka/producer.js";
-
 
 export const signup = async(req,res,next) =>{
     try{
@@ -30,10 +28,12 @@ export const signup = async(req,res,next) =>{
 
     console.log(typeof hashedPassword)
 
+    
+
     const newUser = await prisma.user.create({
         data:{
             email,
-            password:hashedPassword
+            password:hashedPassword 
         }
     })
 
@@ -48,6 +48,8 @@ export const signup = async(req,res,next) =>{
 export const login =async (req,res,next)=>{
     try{
         const {email,password} = req.body;
+
+        console.log("Keys are :", Object.keys(prisma))
         
         const user = await prisma.user.findFirst({
             where:{
@@ -80,7 +82,8 @@ export const login =async (req,res,next)=>{
             userId:user.id,
             type:'login',
             timestamp:new Date(),
-            metadata: {ip:req.ip}
+            metadata: {ip:req.ip},
+            retryCount:0
         });
 
         res.json({accessToken,refreshToken});

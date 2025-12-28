@@ -15,7 +15,7 @@ const services = {
   notification: "http://notification:4006",
 }
 
-router.use('/:service/*rest',(req,res,next)=>{
+router.use('/:service',(req,res,next)=>{
 
 
     const {service} = req.params;
@@ -28,9 +28,9 @@ router.use('/:service/*rest',(req,res,next)=>{
     return createProxyMiddleware({
         target,
         changeOrigin:true,
-        pathRewrite:{
-            [`^/${service}`]:"",
-        },
+         pathRewrite: (path, req) => {
+        return path.replace(`/${service}`, "");
+    },
     })(req,res,next)
 })
 

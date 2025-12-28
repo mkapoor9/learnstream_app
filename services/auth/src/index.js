@@ -12,6 +12,7 @@ const app = express();
 console.log("PWD:", process.cwd());
 console.log("Looking for .env in:", process.cwd());
 
+const PORT = process.env.PORT || 4001;
 
 app.use(cors({
   origin: "*",
@@ -30,6 +31,6 @@ app.use(errorHandler);
 
 
 
-app.listen(4001,()=>{
+app.listen(PORT,()=>{
     console.log("Auth service running on port 4001");
 });
