@@ -1,18 +1,16 @@
-import { useAuth } from "../auth/authContext";
+import { useAuth } from "../auth/authContext"
 
+export const Profile = ()=>{
 
-export default function Profile(){
     const {user,logout} = useAuth();
-    
-    console.log("User inside profile page",user)
-    if(!user) return <p>LOADING...</p>
 
-    return(
-        <div>
-            <h2>Profile</h2>
-            <p>Email : {user.email}</p>
-            <p>Name: {user.name||"Not set"}</p>
-            <button onClick={logout}>Logout</button>
-        </div>
+    if(!user) return <p>Loading...</p>
+
+    return (
+        <>
+          <h2>Profile</h2>
+          <p>{user.email}</p>
+          <p>{user.name}</p>
+        </>
     )
 }
