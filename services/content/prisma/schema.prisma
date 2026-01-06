@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Lesson{
+    id String @id @default(uuid())
+    courseId String 
+    title String
+    content String
+    order Int
+    createdAt DateTime @default(now())
+
+    progress LessonProgress[]
+}
+
+model LessonProgress{
+    id String @id @default(uuid())
+    userId String
+    lessonId String
+    completed Boolean @default(false)
+    updatedAt DateTime @updatedAt
+
+    lesson Lesson @relation(fields: [lessonId],references: [id],onDelete: Cascade)
+
+    @@unique([userId,lessonId])
+}

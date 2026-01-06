@@ -112,7 +112,43 @@ services:
       - "4005:4005"
     networks:
       - learnstream-net
-  
+    
+  notification:
+    build: ./services/notification
+    container_name: notification
+    depends_on:
+      - postgres
+    env_file:
+      - ./services/notification/.env
+    ports:
+      - "4006:4006"
+    networks:
+      - learnstream-net
+
+  courses:
+    build: ./services/course
+    container_name: courses
+    depends_on:
+      - postgres
+    env_file:
+      - ./services/course/.env
+    ports:
+      - "4003:4003"
+    networks:
+      - learnstream-net
+
+  content:
+    build: ./services/content
+    container_name: content
+    depends_on:
+      - postgres
+    env_file:
+      - ./services/content/.env
+    ports:
+      - "4004:4004"
+    networks:
+      - learnstream-net
+
   gateway:
     build: ./services/gateway
     container_name: gateway

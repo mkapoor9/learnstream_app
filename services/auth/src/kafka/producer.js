@@ -13,14 +13,14 @@ const kafka = new Kafka({
 const producer = kafka.producer();
 let connected = false;
 
-export const sendEvent = async (topic, payload) => {
+export const sendUserActivity = async (payload) => {
   if (!connected) {
     await producer.connect();
     connected = true;
   }
 
   await producer.send({
-    topic,
+    topic:'user-activity',
     messages: [{ value: JSON.stringify(payload) }],
   });
 };

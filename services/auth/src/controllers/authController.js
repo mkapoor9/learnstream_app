@@ -2,7 +2,7 @@ import prisma from "../db/prismaSe.js";
 import { hashPassword,comparePassword } from "../utils/hash.js";
 import { generateRefreshToken,generateAccessToken } from "../utils/jwt.js";
 import { hash } from "bcrypt";
-import { sendEvent } from "../kafka/producer.js";
+import { sendUserActivity } from "../kafka/producer.js";
 
 export const signup = async(req,res,next) =>{
     try{
@@ -37,6 +37,16 @@ export const signup = async(req,res,next) =>{
         }
     })
 
+    await sendUserActivity({
+        eventId : crypto.randomUUID(),
+        type:"USER_SIGNUP",
+        userId:newUser.id,
+        source :"auth-service",
+        timestamp : new Date().toISOString(),
+        metadata:{
+            email:newUser.email,
+        }
+    })
     res.status(201).json({
         message:"User Created"
     })
@@ -78,9 +88,9 @@ export const login =async (req,res,next)=>{
             }
         })
 
-        await sendEvent("user-activity",{
+        await sendUserActivity({
             userId:user.id,
-            type:'login',
+            type:'USER_LOGIN',
             timestamp:new Date(),
             metadata: {ip:req.ip},
             retryCount:0
