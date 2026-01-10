@@ -6,7 +6,7 @@ export const createLesson = async(req,res) =>{
     const lesson = await prisma.lesson.create({
         data:{
             courseId,
-            title,
+             title,
             content,
             order
         }
@@ -26,6 +26,18 @@ export const getLessonByCourse = async(req,res)=>{
     })
 
     res.json(lessons);
+}
+
+export const getLessonById = async(req,res)=>{
+    const {lessonId} = req.params;
+
+    const lesson = await prisma.lesson.findUnique({
+        where:{
+            id:lessonId
+        }
+    })
+
+    res.json(lesson);
 }
 
 export const completeLesson = async(req,res)=>{
