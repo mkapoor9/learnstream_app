@@ -7,6 +7,8 @@ import { Profile } from './pages/Profile'
 import NotificationBell from './notifications/NotificationBell';
 import NotificationPage from './notifications/NotificationPage';
 import CourseList from './courses/CourseList'
+import CourseDetails from './courses/CourseDetails'
+import LessonView from './courses/LessonView'
 
 const ProtectedRoute = ({children})=>{
     const{user,loading} = useAuth();
@@ -23,7 +25,7 @@ function App() {
           <Route path ='/login' element={<Login/>}/>
           <Route path= '/signup' element={<Signup/>}/>
           <Route  
-            path='/'
+            index
             element={
               <ProtectedRoute>
                 <Profile/>
@@ -44,22 +46,21 @@ function App() {
                   <CourseList/>
                 </ProtectedRoute>
               }
-             >
+            />
             <Route
-              path="/course/:courseId"
+              path="/courses/:courseId"
               element={
                 <ProtectedRoute>
-                  <CourseDetails />
+                  <CourseDetails/>
                 </ProtectedRoute>
               }/>
             <Route
-              path="/lesson/:lessonId"
+              path="/courses/lesson/:lessonId"
               element={
                 <ProtectedRoute>
                   <LessonView />
                 </ProtectedRoute>
               }/>
-            </Route>
         </Routes>
       </AuthContextProvider>
     </BrowserRouter>

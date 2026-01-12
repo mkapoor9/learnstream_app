@@ -17,7 +17,7 @@ export default function CourseList(){
                 >
                     <h3>{course.title}</h3>
                     <p>{course.description}</p>
-                    <button onClick={()=>(navigate(`/courses/${courses.id}`))}>
+                    <button onClick={()=>(navigate(`/courses/${course.id}`))}>
                         View Course
                     </button>
                 </div>

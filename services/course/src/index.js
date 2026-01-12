@@ -13,7 +13,7 @@ console.log(PORT)
 app.use(cors());
 app.use(express.json());
 
-app.use('/course',courseRoutes);
+app.use('/',courseRoutes);
 
 app.listen(PORT,async ()=>{
     console.log(`App is running on PORT ${PORT}`)

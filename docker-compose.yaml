@@ -125,9 +125,9 @@ services:
     networks:
       - learnstream-net
 
-  courses:
+  course:
     build: ./services/course
-    container_name: courses
+    container_name: course
     depends_on:
       - postgres
     env_file:

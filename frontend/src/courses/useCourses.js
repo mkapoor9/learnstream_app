@@ -6,7 +6,7 @@ export const useCourses = () =>{
     const [loading,setLoading] = useState(true);
 
     const fetchCourse = async () =>{
-        const res = await api.get('/courses')
+        const res = await api.get('/course')
         setCourses(res.data);
         setLoading(false)
     }

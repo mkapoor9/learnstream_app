@@ -1,10 +1,14 @@
 import {useEffect,useState} from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Outlet,useNavigate, useParams } from 'react-router-dom';
+import api from '../api/client';
 
 
 export default function CourseDetails(){
+    console.log("COURSE DETAILS")
     const {courseId} = useParams();
     const navigate = useNavigate();
+
+    console.log(courseId)
 
     const [lessons,setLessons] = useState([]);
     const [progress,setProgress] = useState(null);
@@ -39,11 +43,12 @@ export default function CourseDetails(){
                   style={{ border: "1px solid #ddd", padding: 12, marginBottom: 10 }}
                 >
                     <h4>{lesson.title}</h4>
-                    <button onClick={()=>(navigate(`/lesson/${lesson.id}`))}>
+                    <button onClick={()=>(navigate(`lesson/${lesson.id}`))}>
                         Open Lesson
                     </button>
                 </div>
             ))}
+            <Outlet/>
         </div>
     )
 }

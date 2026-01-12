@@ -54,11 +54,39 @@ export const completeLesson = async(req,res)=>{
             completed:true
         },
         create:{
-            userId:req.user.id,
+            userId:req.userId,
             lessonId,
             completed:true
         }
     })
+
+     const lesson = await prisma.lesson.findUnique({
+        where: { id: lessonId },
+    });
+
+     const lessons = await prisma.lesson.findMany({
+            where: { courseId: lesson.courseId },
+            include: {
+            progress: {
+                where: { userId: req.userId },
+            },
+        },
+    });
+
+  const completed = lessons.filter(
+    (l) => l.progress.length && l.progress[0].completed
+  ).length;
+
+   const percentage = Math.round((completed / lessons.length) * 100);
+
+   await emitContentEvent({
+    type: "COURSE_PROGRESS_UPDATED",
+    userId: req.userId,
+    courseId: lesson.courseId,
+    completed,
+    total: lessons.length,
+    percentage,
+  });
 
     res.json(progress);
 }
@@ -73,7 +101,7 @@ export const getCourseProgress = async(req,res)=>{
         include:{
             progress:{
                 where:{
-                    userId:req.user.id
+                    userId:req.userId
                 }
             }
         }

@@ -25,7 +25,10 @@ export const createCourse = async(req,res)=>{
         })
     }
 
-    res.json(course);
+    console.log(course)
+    res.status(201).json({
+        message:"Course Added"
+    });
 }
 
 export const listCourses = async(req,res)=>{
