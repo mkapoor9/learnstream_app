@@ -128,7 +128,7 @@ export const logout = async (req,res,next) =>{
     try{
         const {refreshToken} = req.body;
 
-        await prisma.token.delete({
+        await prisma.token.deleteMany({
             where:{
                 token:refreshToken
             }

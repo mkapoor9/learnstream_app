@@ -26,7 +26,7 @@ export const startUserConsumer = async() =>{
       switch (event.type) {
         case "USER_SIGNUP":
           await prisma.userProfile.upsert({
-          where: { id: event.userId },
+          where: { email:event.metadata.email},
           update: {},
           create: {
             id: event.userId,

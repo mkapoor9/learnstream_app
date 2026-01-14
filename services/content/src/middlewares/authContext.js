@@ -10,3 +10,11 @@ export const authContext = (req,res,next)=>{
     req.userId = userId;
     next();
 }
+
+export const authorize = (roles) => (req, res, next) => {
+  const role = req.headers["x-user-role"];
+  if (!roles.includes(role)) {
+    return res.status(403).json({ message: "Forbidden" });
+  }
+  next();
+};

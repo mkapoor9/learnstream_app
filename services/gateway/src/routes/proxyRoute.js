@@ -1,11 +1,12 @@
 import express from "express";
 import {createProxyMiddleware} from 'http-proxy-middleware';
-import { verifyJWT } from "../middleware/authMiddleware.js";
+import { attachUserContext, verifyJWT } from "../middleware/authMiddleware.js";
 
 
 const router = express.Router();
 
 router.use(verifyJWT);
+router.use(attachUserContext)
 
 const services = {
   user: "http://user:4002",

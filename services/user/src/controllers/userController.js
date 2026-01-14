@@ -18,10 +18,10 @@ export const getProfile = async (req, res) => {
 };
 
 export const updateProfile = async (req, res) => {
-  const { name, bio, avatarUrl } = req.body;
+  const { name, bio,email, avatarUrl } = req.body;
 
   const profile = await prisma.userProfile.upsert({
-    where: { id: req.user.id },
+    where: { email },
     update: { name, bio, avatarUrl },
     create: {
       id: req.user.id,
