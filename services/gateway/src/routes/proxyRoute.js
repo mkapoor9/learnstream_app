@@ -14,6 +14,7 @@ const services = {
   content: "http://content:4004",
   activity: "http://activity:4005",
   notification: "http://notification:4006",
+  payment:"http://payment:4007"
 }
 
 router.use('/:service',(req,res,next)=>{

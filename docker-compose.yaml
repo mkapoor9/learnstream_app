@@ -136,6 +136,17 @@ services:
       - "4003:4003"
     networks:
       - learnstream-net
+  payment:
+    build: ./services/payment
+    container_name: payment
+    depends_on:
+      - postgres
+    env_file:
+      - ./services/payment/.env
+    ports:
+      - "4007:4007"
+    networks:
+      - learnstream-net
 
   content:
     build: ./services/content

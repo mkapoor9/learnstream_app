@@ -1,6 +1,16 @@
 import prisma from "../db/prisma.js";
 import { emitCourseEvent } from "../kafka/producer.js";
 
+
+export const myCreatedCourse = async(req,res)=>{
+    const courses = await prisma.course.findMany({
+        where:{createdBy:req.user.id},
+        orderBy:{createdAt:"desc"}
+    })
+
+    res.json(courses)
+}
+
 export const createCourse = async(req,res)=>{
     const {title,description} = req.body;
 

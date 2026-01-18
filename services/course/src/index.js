@@ -4,6 +4,7 @@ import 'dotenv/config'
 
 import courseRoutes from './routes/courseRoutes.js'
 import { connectCourseProducer } from './kafka/producer.js';
+import { startCourseConsumer } from './kafka/consumer.js';
 
 const app = express();
 
@@ -17,5 +18,6 @@ app.use('/',courseRoutes);
 
 app.listen(PORT,async ()=>{
     console.log(`App is running on PORT ${PORT}`)
+    await startCourseConsumer();
     await connectCourseProducer();
 })

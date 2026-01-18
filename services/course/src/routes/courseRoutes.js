@@ -3,7 +3,8 @@ import {
     createCourse,
     myCourses,
     listCourses,
-    enrollCourse
+    enrollCourse,
+    myCreatedCourse
 } from '../controllers/courseController.js'
 import { authContext,authorize } from "../middlewares/authContext.js";
 
@@ -17,6 +18,7 @@ router.post(
     createCourse);
 router.get('/',listCourses);
 router.post('/:courseId/enroll',enrollCourse);
+router.get('/created/me',myCreatedCourse)
 router.get('/me',myCourses);
 
 export default router;

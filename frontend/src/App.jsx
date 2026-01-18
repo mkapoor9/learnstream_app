@@ -9,6 +9,9 @@ import NotificationPage from './notifications/NotificationPage';
 import CourseList from './courses/CourseList'
 import CourseDetails from './courses/CourseDetails'
 import LessonView from './courses/LessonView'
+import InstructorDashboard from './instructor/InstructorDashboard'
+import InstructorCourseManage from './instructor/InstructorCourseManage'
+import InstructorRoute from './auth/InstructorRoute'
 
 const ProtectedRoute = ({children})=>{
     const{user,loading} = useAuth();
@@ -61,6 +64,22 @@ function App() {
                   <LessonView />
                 </ProtectedRoute>
               }/>
+            <Route
+              path="/instructor"
+              element={
+                <InstructorRoute>
+                  <InstructorDashboard />
+                </InstructorRoute>
+              }
+            />
+            <Route
+              path="/instructor/course/:courseId"
+              element={
+                <InstructorRoute>
+                  <InstructorCourseManage />
+                </InstructorRoute>
+              }
+            />
         </Routes>
       </AuthContextProvider>
     </BrowserRouter>
