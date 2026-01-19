@@ -8,11 +8,12 @@ export default function MyCreatedCourses(){
 
     const load = async() =>{
         const res = await api.get('/course/created/me');
+        console.log(res.data)
         setCourses(res.data)
     }
 
     useEffect(()=>{
-        load
+        load();
     },[])
 
     return (

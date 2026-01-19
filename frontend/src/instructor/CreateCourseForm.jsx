@@ -19,7 +19,7 @@ export default function CreateCourseForm({onCreated}){
             <input
               placeholder="Course Title"
               value={title}
-              onChange={(e)=>e.target.value}
+              onChange={(e)=>setTitle(e.target.value)}
             />
 
             <br/>
@@ -27,7 +27,7 @@ export default function CreateCourseForm({onCreated}){
             <textarea
              placeholder="Course Description"
              value={description}
-             onChange={(e)=>e.target.value}
+             onChange={(e)=>setDescription(e.target.value)}
              />
 
             <br/>

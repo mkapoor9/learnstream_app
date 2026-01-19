@@ -1,6 +1,5 @@
-import { response } from "express";
 import jwt from "jsonwebtoken";
-import {axios} from 'axios';
+import axios from 'axios';
 
 export const verifyJWT = async(req,res,next)=>{
     const excluded = ['/auth/login','auth/signup'];
@@ -43,12 +42,13 @@ export const authorize = (allowedRoles=[])=>{
 }*/
 
 export const attachUserContext = async (req, res, next) => {
+  console.log("INSIDE ATTACH USER")
   try {
     const response = await axios.get(
-      "http://user:4002/user/profile",
+      "http://user:4002/profile",
       {
         headers: {
-          "x-user-id": req.user.userId,
+          "x-user-id": req.user.id,
         },
       }
     );
@@ -60,8 +60,11 @@ export const attachUserContext = async (req, res, next) => {
     req.headers["x-user-email"] = user.email;
     req.headers["x-user-role"] = user.role;
 
+    console.log("USER ROLES IS :",user.role)
+
     next();
   } catch (err) {
+    console.log("Attach user context failed:", err.response?.data || err.message);
     return res.status(401).json({ message: "User context error" });
   }
 };
